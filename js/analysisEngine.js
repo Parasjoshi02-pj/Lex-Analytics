@@ -4,7 +4,7 @@
 // Orchestrates all analysis modules and optionally enhances with Gemini AI
 
 const AnalysisEngine = {
-  apiKey: 'AIzaSyCYlKk0wj_hCWIBgYCMtg_etW8GZGNvckQ',
+  apiKey: '', // DO NOT HARDCODE YOUR API KEY HERE
   lastResult: null,
 
   /**
