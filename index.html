@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lex Analytics — AI Legal Intelligence System</title>
+  <meta name="description" content="AI-powered legal intelligence and analytics platform specialized in Indian Law. Case analysis, precedent retrieval, outcome prediction, and strategic legal guidance.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- Mobile Toggle -->
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">☰</button>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SIDEBAR NAVIGATION -->
+    <!-- ═══════════════════════════════════════════ -->
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <div class="sidebar__logo">⚖</div>
+        <div>
+          <div class="sidebar__title">Lex Analytics</div>
+          <div class="sidebar__subtitle">Legal Intelligence</div>
+        </div>
+      </div>
+
+      <nav class="sidebar__nav">
+        <!-- INPUT -->
+        <div class="nav-section">
+          <div class="nav-section__label">Input</div>
+          <a class="nav-item active" data-view="input" href="#input">
+            <span class="nav-item__icon">📄</span> Case Input
+          </a>
+        </div>
+
+        <!-- ANALYSIS -->
+        <div class="nav-section">
+          <div class="nav-section__label">Analysis</div>
+          <a class="nav-item" data-view="dashboard" href="#dashboard">
+            <span class="nav-item__icon">📊</span> Dashboard
+          </a>
+          <a class="nav-item" data-view="summary" href="#summary">
+            <span class="nav-item__icon">📋</span> Case Summary
+          </a>
+          <a class="nav-item" data-view="similar" href="#similar">
+            <span class="nav-item__icon">📚</span> Similar Cases
+          </a>
+          <a class="nav-item" data-view="comparison" href="#comparison">
+            <span class="nav-item__icon">🔄</span> Comparison
+          </a>
+        </div>
+
+        <!-- INSIGHTS -->
+        <div class="nav-section">
+          <div class="nav-section__label">Insights</div>
+          <a class="nav-item" data-view="prediction" href="#prediction">
+            <span class="nav-item__icon">📈</span> Predictions
+          </a>
+          <a class="nav-item" data-view="judge" href="#judge">
+            <span class="nav-item__icon">👨‍⚖️</span> Judge Insights
+          </a>
+          <a class="nav-item" data-view="sections" href="#sections">
+            <span class="nav-item__icon">📉</span> Section Analysis
+          </a>
+          <a class="nav-item" data-view="bail" href="#bail">
+            <span class="nav-item__icon">🔐</span> Bail Insights
+          </a>
+        </div>
+
+        <!-- STRATEGY -->
+        <div class="nav-section">
+          <div class="nav-section__label">Strategy</div>
+          <a class="nav-item" data-view="risks" href="#risks">
+            <span class="nav-item__icon">⚠️</span> Risk Alerts
+            <span class="nav-item__badge" style="display:none">0</span>
+          </a>
+          <a class="nav-item" data-view="strategy" href="#strategy">
+            <span class="nav-item__icon">🧠</span> Strategy
+          </a>
+          <a class="nav-item" data-view="timeline" href="#timeline">
+            <span class="nav-item__icon">⏱️</span> Timeline
+          </a>
+          <a class="nav-item" data-view="copilot" href="#copilot">
+            <span class="nav-item__icon">🤖</span> AI Copilot
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar__footer">
+        <p class="sidebar__disclaimer">⚠️ Analytical insights only. Not legal advice. All data sourced from internal databases.</p>
+      </div>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- MAIN CONTENT -->
+    <!-- ═══════════════════════════════════════════ -->
+    <main class="main">
+      <div class="main__content">
+
+        <!-- ═══ CASE INPUT VIEW ═══ -->
+        <div class="view active" id="view-input">
+          <div class="page-header">
+            <h1 class="page-header__title">📄 Case Input</h1>
+            <p class="page-header__desc">Enter case details for AI-powered legal analysis</p>
+          </div>
+
+          <div class="card mb-6">
+            <div class="form-group">
+              <label class="form-label">Case File / Description *</label>
+              <textarea class="form-textarea" id="caseInput" rows="12" placeholder="Paste your case file, FIR, judgment, or describe the case facts in detail...&#10;&#10;Include: parties, facts, dates, charges, evidence, and any relevant details."></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Court</label>
+                <select class="form-select" id="courtInput">
+                  <option value="">Auto-detect</option>
+                  <option value="Supreme Court of India">Supreme Court</option>
+                  <option value="High Court">High Court</option>
+                  <option value="Sessions Court">Sessions Court</option>
+                  <option value="District Court">District Court</option>
+                  <option value="Magistrate Court">Magistrate Court</option>
+                  <option value="Fast Track Court">Fast Track Court</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Judge Name (optional)</label>
+                <input class="form-input" id="judgeInput" type="text" placeholder="e.g. Justice D.Y. Chandrachud">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Case Type</label>
+                <select class="form-select" id="typeInput">
+                  <option value="">Auto-detect</option>
+                  <option value="criminal">Criminal</option>
+                  <option value="civil">Civil</option>
+                  <option value="constitutional">Constitutional</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">State</label>
+                <input class="form-input" id="stateInput" type="text" placeholder="e.g. Delhi, Maharashtra">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Additional Sections (comma-separated)</label>
+                <input class="form-input" id="sectionsInput" type="text" placeholder="e.g. IPC 302, CrPC 439, NDPS Act 20">
+              </div>
+            </div>
+
+            <div class="flex gap-3 mt-4">
+              <button class="btn btn--primary btn--lg" id="btnAnalyze">🔍 Analyze Case</button>
+              <button class="btn btn--secondary" id="btnSample">📝 Load Sample</button>
+              <button class="btn btn--ghost" id="btnClear">Clear</button>
+            </div>
+          </div>
+
+          <div class="insight-box">
+            <div class="insight-box__title">💡 Tips for Better Analysis</div>
+            <div class="insight-box__text">Include as many details as possible: FIR number, dates, witness information, evidence descriptions, legal sections charged, and court details. The more context provided, the more accurate the analysis.</div>
+          </div>
+        </div>
+
+
+
+        <!-- ═══ DASHBOARD VIEW ═══ -->
+        <div class="view" id="view-dashboard">
+          <div class="page-header">
+            <h1 class="page-header__title">📊 Intelligence Dashboard</h1>
+            <p class="page-header__desc">Overview of case analysis and key metrics</p>
+          </div>
+
+          <!-- KPI Cards -->
+          <div class="dashboard-grid mb-6">
+            <div class="metric-card animate-in">
+              <div class="metric-card__icon-wrap metric-card__icon-wrap--green">🎯</div>
+              <div class="metric-card__label">Success Probability</div>
+              <div class="metric-card__value" id="metricSuccess">—</div>
+            </div>
+            <div class="metric-card animate-in">
+              <div class="metric-card__icon-wrap metric-card__icon-wrap--red">⚠️</div>
+              <div class="metric-card__label">Risk Score</div>
+              <div class="metric-card__value" id="metricRisk">—</div>
+            </div>
+            <div class="metric-card animate-in">
+              <div class="metric-card__icon-wrap metric-card__icon-wrap--blue">📊</div>
+              <div class="metric-card__label">Confidence</div>
+              <div class="metric-card__value" id="metricConfidence">—</div>
+            </div>
+            <div class="metric-card animate-in">
+              <div class="metric-card__icon-wrap metric-card__icon-wrap--purple">📚</div>
+              <div class="metric-card__label">Similar Cases</div>
+              <div class="metric-card__value" id="metricCases">—</div>
+            </div>
+          </div>
+
+          <!-- Progress Rings -->
+          <div class="dashboard-row mb-6" style="grid-template-columns:repeat(3,1fr)">
+            <div class="card" style="text-align:center">
+              <h4 style="margin-bottom:var(--space-4)">Success Score</h4>
+              <div id="ringSuccess"></div>
+            </div>
+            <div class="card" style="text-align:center">
+              <h4 style="margin-bottom:var(--space-4)">Risk Level</h4>
+              <div id="ringRisk"></div>
+            </div>
+            <div class="card" style="text-align:center">
+              <h4 style="margin-bottom:var(--space-4)">Confidence</h4>
+              <div id="ringConfidence"></div>
+            </div>
+          </div>
+
+          <!-- Charts Row -->
+          <div class="dashboard-row mb-6">
+            <div class="chart-card">
+              <div class="chart-card__header"><h3 class="chart-card__title">📈 Outcome Prediction</h3></div>
+              <canvas id="chartPrediction"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-card__header"><h3 class="chart-card__title">🎯 Risk Radar</h3></div>
+              <canvas id="chartRisk"></canvas>
+            </div>
+          </div>
+
+          <!-- AI Summary -->
+          <div id="aiSummaryBox"></div>
+        </div>
+
+        <!-- ═══ CASE SUMMARY VIEW ═══ -->
+        <div class="view" id="view-summary">
+          <div class="page-header">
+            <h1 class="page-header__title">📋 Case Summary</h1>
+            <p class="page-header__desc">Structured breakdown of case facts, issues, and timeline</p>
+          </div>
+          <div id="summaryContent">
+            <div class="empty-state"><div class="empty-state__icon">📋</div><div class="empty-state__title">No Case Analyzed</div><div class="empty-state__desc">Submit a case from the Input page to see the summary.</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ SIMILAR CASES VIEW ═══ -->
+        <div class="view" id="view-similar">
+          <div class="page-header">
+            <h1 class="page-header__title">📚 Similar Cases</h1>
+            <p class="page-header__desc">Top matching precedents from the Indian legal database</p>
+          </div>
+          <div id="similarCasesContent">
+            <div class="empty-state"><div class="empty-state__icon">📚</div><div class="empty-state__title">No Similar Cases</div><div class="empty-state__desc">Analyze a case first to find matching precedents.</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ COMPARISON VIEW ═══ -->
+        <div class="view" id="view-comparison">
+          <div class="page-header">
+            <h1 class="page-header__title">🔄 Comparison Analysis</h1>
+            <p class="page-header__desc">Side-by-side comparison with matched precedents</p>
+          </div>
+          <div id="comparisonContent">
+            <div class="empty-state"><div class="empty-state__icon">🔄</div><div class="empty-state__title">No Comparison Data</div><div class="empty-state__desc">Analyze a case to generate comparison analysis.</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ PREDICTION VIEW ═══ -->
+        <div class="view" id="view-prediction">
+          <div class="page-header">
+            <h1 class="page-header__title">📈 Outcome Predictions</h1>
+            <p class="page-header__desc">Probability analysis based on precedent patterns</p>
+          </div>
+          <div id="predictionContent">
+            <div class="empty-state"><div class="empty-state__icon">📈</div><div class="empty-state__title">No Predictions</div><div class="empty-state__desc">Analyze a case to see outcome predictions.</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ JUDGE INSIGHTS VIEW ═══ -->
+        <div class="view" id="view-judge">
+          <div class="page-header">
+            <h1 class="page-header__title">👨‍⚖️ Judge Intelligence</h1>
+            <p class="page-header__desc">Behavioral analysis and historical tendencies</p>
+          </div>
+          <div id="judgeContent">
+            <div class="empty-state"><div class="empty-state__icon">👨‍⚖️</div><div class="empty-state__title">No Judge Data</div><div class="empty-state__desc">Specify a judge name or analyze a case first.</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ SECTION ANALYSIS VIEW ═══ -->
+        <div class="view" id="view-sections">
+          <div class="page-header">
+            <h1 class="page-header__title">📉 Section-Wise Analysis</h1>
+            <p class="page-header__desc">Success rates and patterns for each legal section</p>
+          </div>
+          <div id="sectionContent">
+            <div class="empty-state"><div class="empty-state__icon">📉</div><div class="empty-state__title">No Section Data</div><div class="empty-state__desc">Analyze a case to see section-wise breakdown.</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ BAIL INSIGHTS VIEW ═══ -->
+        <div class="view" id="view-bail">
+          <div class="page-header">
+            <h1 class="page-header__title">🔐 Bail & Conviction Insights</h1>
+            <p class="page-header__desc">Probability trends and key decision factors</p>
+          </div>
+          <div id="bailContent">
+            <div class="empty-state"><div class="empty-state__icon">🔐</div><div class="empty-state__title">No Bail Data</div><div class="empty-state__desc">Analyze a case to see bail insights.</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ RISK ALERTS VIEW ═══ -->
+        <div class="view" id="view-risks">
+          <div class="page-header">
+            <h1 class="page-header__title">⚠️ Risk & Alert System</h1>
+            <p class="page-header__desc">Identified risks, evidence gaps, and warning indicators</p>
+          </div>
+          <div id="risksContent">
+            <div class="empty-state"><div class="empty-state__icon">⚠️</div><div class="empty-state__title">No Risk Data</div><div class="empty-state__desc">Analyze a case to identify risks.</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ STRATEGY VIEW ═══ -->
+        <div class="view" id="view-strategy">
+          <div class="page-header">
+            <h1 class="page-header__title">🧠 Strategic Recommendations</h1>
+            <p class="page-header__desc">Defense and prosecution strategy analysis</p>
+          </div>
+          <div id="strategyContent">
+            <div class="empty-state"><div class="empty-state__icon">🧠</div><div class="empty-state__title">No Strategy Data</div><div class="empty-state__desc">Analyze a case to see strategic recommendations.</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ TIMELINE VIEW ═══ -->
+        <div class="view" id="view-timeline">
+          <div class="page-header">
+            <h1 class="page-header__title">⏱️ Case Timeline & Duration</h1>
+            <p class="page-header__desc">Predicted duration, milestones, and delay assessment</p>
+          </div>
+          <div id="timelineContent">
+            <div class="empty-state"><div class="empty-state__icon">⏱️</div><div class="empty-state__title">No Timeline Data</div><div class="empty-state__desc">Analyze a case to see timeline predictions.</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ AI COPILOT VIEW ═══ -->
+        <div class="view" id="view-copilot">
+          <div class="page-header">
+            <h1 class="page-header__title">🤖 AI Legal Copilot</h1>
+            <p class="page-header__desc">Ask follow-up questions about your analyzed case</p>
+          </div>
+
+          <div class="card">
+            <div class="chat-container">
+              <div class="chat-messages" id="copilotMessages">
+                <div class="chat-bubble chat-bubble--ai">
+                  👋 Welcome to the AI Legal Copilot. I can answer questions about your analyzed case. Try asking:<br><br>
+                  • "What is the weakest point in this case?"<br>
+                  • "What are the chances of bail?"<br>
+                  • "Suggest better precedents"<br>
+                  • "How to improve chances of bail?"<br>
+                  • "What is the defense strategy?"
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2" style="padding:8px 16px">
+                <button class="btn btn--sm btn--secondary copilot-quick" data-question="What is the weakest point in this case?">Weakest point?</button>
+                <button class="btn btn--sm btn--secondary copilot-quick" data-question="How to improve chances of bail?">Bail chances?</button>
+                <button class="btn btn--sm btn--secondary copilot-quick" data-question="Suggest better precedents">Better precedents</button>
+                <button class="btn btn--sm btn--secondary copilot-quick" data-question="What is the defense strategy?">Defense strategy</button>
+                <button class="btn btn--sm btn--secondary copilot-quick" data-question="What are the main risks?">Main risks</button>
+              </div>
+              <div class="chat-input-wrap">
+                <input class="form-input" id="copilotInput" type="text" placeholder="Ask a follow-up question about your case...">
+                <button class="btn btn--primary" id="btnCopilotSend">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- .main__content -->
+    </main>
+
+  </div><!-- .app -->
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay" style="display:none">
+    <div class="loading-overlay__spinner"></div>
+    <div class="loading-overlay__text">Analyzing case data...</div>
+  </div>
+
+  <!-- Scripts (order matters) -->
+  <script src="data/precedents.js"></script>
+  <script src="data/sections.js"></script>
+  <script src="data/judges.js"></script>
+  <script src="data/statistics.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/caseParser.js"></script>
+  <script src="js/caseRetrieval.js"></script>
+  <script src="js/outcomePredictor.js"></script>
+  <script src="js/judgeAnalyzer.js"></script>
+  <script src="js/sectionAnalyzer.js"></script>
+  <script src="js/riskAssessor.js"></script>
+  <script src="js/strategyAdvisor.js"></script>
+  <script src="js/timelinePredictor.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/analysisEngine.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
